@@ -19,14 +19,11 @@ public class LevelSpawner : MonoBehaviour
     [SerializeField] private int diamondCount = 20;
     [SerializeField] private int minimumDiamondDistance = 2;
 
+    public int TotalDiamonds => Mathf.Min(diamondCount, greenTiles.Count);
+
     private List<GreenTileData> greenTiles = new();
 
-    private void Start()
-    {
-        GenerateGrid();
-    }
-
-    private void GenerateGrid()
+    public void GenerateGrid()
     {
         greenTiles.Clear();
 

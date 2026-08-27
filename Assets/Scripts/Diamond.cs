@@ -6,9 +6,12 @@ public class Diamond : MonoBehaviour
     [SerializeField] private float floatHeight = 0.25f;
     [SerializeField] private float floatDuration = 1.2f;
     private Vector3 startPosition;
+    private GameManager gameManager;
+    private bool collected;
 
     private void Start()
     {
+        gameManager = GameManager.instance;
         ApplyAnimation();
     }
 
@@ -23,9 +26,16 @@ public class Diamond : MonoBehaviour
 
     public void Collect()
     {
+        if(collected)
+            return;
+             
+        collected = true;
         // play collect animation
-        transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(() =>
+        gameManager.ShowFloatingTextAt(transform.position);
+
+        transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
         {
+            gameManager.CollectDiamond();
             Destroy(gameObject);
         });
     }
